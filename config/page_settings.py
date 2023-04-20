@@ -1,0 +1,1 @@
+SEGMENTS = ('Midsize', 'Compact', 'Compact SUV', 'Pickup Trucks')
