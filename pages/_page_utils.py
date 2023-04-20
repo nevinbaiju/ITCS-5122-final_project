@@ -1,6 +1,7 @@
 import pandas as pd
 import joblib
 from ._models import *
+import os
 
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
@@ -8,7 +9,18 @@ from sklearn.pipeline import Pipeline
 
 from xgboost import XGBRegressor
 
-def make_prediction(pred_data):
+def build_model(segment='midsize_sedan'):
+    df = pd.read_csv('processed_data/midsize_sedan.csv')
+    X = df.iloc[:, 1:]
+    y = df.iloc[:, 0]
+
+    price_pipe.fit(X, y)
+    joblib.dump(price_pipe, f'models/{segment}.pkl')
+
+
+def make_prediction(pred_data, segment='midsize_sedan'):
+    if not os.path.exists(f'models/{segment}.pkl'):
+        build_model(segment)
     pred_data['manufacturer'] = "_"
     pred_data['state'] = "_"
     pred_data['posting_year'] = 2023
@@ -21,6 +33,6 @@ def make_prediction(pred_data):
     pred_data.columns=['year','manufacturer','model','condition',
                        'odometer','transmission','drive','paint_color',
                        'state','posting_year','age']
-    model = joblib.load('models/midsize.pkl')
+    model = joblib.load(f'models/{segment}.pkl')
     
     return model.predict(pred_data)
