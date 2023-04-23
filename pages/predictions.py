@@ -1,7 +1,8 @@
 import streamlit as st
 from ._page_utils import make_prediction
+from ._page_config import SEGMENT_MODELS
 
-def midsize():
+def midsize(segment):
 
     col1, col2 = st.columns(2)
     pred_data = {}
@@ -18,7 +19,7 @@ def midsize():
 
         pred_data['model'] = st.selectbox(
         'Condition',
-        ('accord', 'camry', 'sentra', 'sonata'))
+        SEGMENT_MODELS[segment])
 
     with col2:
 

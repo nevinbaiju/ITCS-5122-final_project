@@ -9,8 +9,8 @@ from sklearn.pipeline import Pipeline
 
 from xgboost import XGBRegressor
 
-def build_model(segment='midsize_sedan'):
-    df = pd.read_csv('processed_data/midsize_sedan.csv')
+def build_model(segment='midsize'):
+    df = pd.read_csv(f'processed_data/{segment.lower()}.csv')
     X = df.iloc[:, 1:]
     y = df.iloc[:, 0]
 
@@ -18,8 +18,8 @@ def build_model(segment='midsize_sedan'):
     joblib.dump(price_pipe, f'models/{segment}.pkl')
 
 
-def make_prediction(pred_data, segment='midsize_sedan'):
-    if not os.path.exists(f'models/{segment}.pkl'):
+def make_prediction(pred_data, segment='midsize'):
+    if not os.path.exists(f'models/{segment.lower()}.pkl'):
         build_model(segment)
     pred_data['manufacturer'] = "_"
     pred_data['state'] = "_"
@@ -33,6 +33,9 @@ def make_prediction(pred_data, segment='midsize_sedan'):
     pred_data.columns=['year','manufacturer','model','condition',
                        'odometer','transmission','drive','paint_color',
                        'state','posting_year','age']
-    model = joblib.load(f'models/{segment}.pkl')
+    model = joblib.load(f'models/{segment.lower()}.pkl')
     
     return model.predict(pred_data)
+
+def load_data(segment):
+    return pd.read_csv(f'processed_data/{segment.lower()}.csv')
