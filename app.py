@@ -5,6 +5,16 @@ from pages.analyze_resale import analyze_resale_value
 from config.page_settings import SEGMENTS
 
 st.set_page_config(layout="wide", initial_sidebar_state="collapsed")
+st.markdown(
+    """
+<style>
+    [data-testid="collapsedControl"] {
+        display: none
+    }
+</style>
+""",
+    unsafe_allow_html=True,
+)
 # st.markdown("<style> ul {display: none;} </style>", unsafe_allow_html=True)
 
 tab1, tab2, tab3 = st.tabs(["Estimate resale value", "Trends in Resale value", "Analyze cars"])
