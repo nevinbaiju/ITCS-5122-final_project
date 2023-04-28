@@ -37,7 +37,8 @@ def midsize(segment):
         'blue', 'custom', 'grey', 'black', 
         'brown', 'yellow', 'purple', 'orange'))
 
-    st.write(f"The current car would be worth: {make_prediction(pred_data, segment)[0]}")
+    pred = str(int(make_prediction(pred_data, segment)[0])) + "$"
+    st.header(f"Your car would be worth: {pred}")
 
     
 

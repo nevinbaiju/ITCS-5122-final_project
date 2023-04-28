@@ -6,6 +6,7 @@ import os
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
 from sklearn.pipeline import Pipeline
+from sklearn.model_selection import train_test_split
 
 from xgboost import XGBRegressor
 
@@ -13,8 +14,9 @@ def build_model(segment='midsize'):
     df = pd.read_csv(f'processed_data/{segment.lower()}.csv')
     X = df.iloc[:, 1:]
     y = df.iloc[:, 0]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
-    price_pipe.fit(X, y)
+    price_pipe.fit(X_train, y_train)
     joblib.dump(price_pipe, f'models/{segment.lower()}.pkl')
 
 
