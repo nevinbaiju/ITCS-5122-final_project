@@ -7,3 +7,4 @@ streamlit-toggle-switch
 altair
 matplotlib
 seaborn
+vega-datasets
