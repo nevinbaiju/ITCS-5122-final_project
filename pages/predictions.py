@@ -2,7 +2,7 @@ import streamlit as st
 from ._page_utils import make_prediction
 from ._page_config import SEGMENT_MODELS
 
-def predict_page(segment):
+def midsize(segment):
 
     col1, col2 = st.columns(2)
     pred_data = {}
