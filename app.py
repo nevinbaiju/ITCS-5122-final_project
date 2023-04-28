@@ -1,6 +1,6 @@
 import streamlit as st
 
-from pages.predictions import midsize
+from pages.predictions import predict_page
 from pages.analyze_resale import analyze_resale_value
 from config.page_settings import SEGMENTS
 
@@ -14,7 +14,7 @@ with tab1:
         'Select the segment of cars you want to analyze',
         SEGMENTS, key='1')
 
-    midsize(segment)
+    predict_page(segment)
 
 with tab2:
     segment = st.selectbox(

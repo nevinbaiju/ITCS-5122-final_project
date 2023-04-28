@@ -15,7 +15,7 @@ def build_model(segment='midsize'):
     y = df.iloc[:, 0]
 
     price_pipe.fit(X, y)
-    joblib.dump(price_pipe, f'models/{segment}.pkl')
+    joblib.dump(price_pipe, f'models/{segment.lower()}.pkl')
 
 
 def make_prediction(pred_data, segment='midsize'):

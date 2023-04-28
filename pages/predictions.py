@@ -2,7 +2,7 @@ import streamlit as st
 from ._page_utils import make_prediction
 from ._page_config import SEGMENT_MODELS
 
-def midsize(segment):
+def predict_page(segment):
 
     col1, col2 = st.columns(2)
     pred_data = {}
@@ -37,7 +37,7 @@ def midsize(segment):
         'blue', 'custom', 'grey', 'black', 
         'brown', 'yellow', 'purple', 'orange'))
 
-    st.write(f"The current car would be worth: {make_prediction(pred_data)[0]}")
+    st.write(f"The current car would be worth: {make_prediction(pred_data, segment)[0]}")
 
     
 
