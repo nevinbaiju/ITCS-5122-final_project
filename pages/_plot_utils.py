@@ -26,7 +26,7 @@ def plot_segment_volume_altair(df):
 
     chart = alt.Chart(grouped_df).mark_bar().encode(
     x=alt.X('year:N', title='Year'),
-    y=alt.Y('price:Q', title='Price'),
+    y=alt.Y('price:Q', title='Volume'),
     color=alt.Color('year:N', title='Year')
     ).facet(
         column='model:N'
