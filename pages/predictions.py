@@ -13,19 +13,20 @@ def midsize(segment):
         'Model Year',
         tuple(range(2023, 1989, -1)))
 
+        pred_data['transmission'] = st.selectbox(
+        'Transmission',
+        ('automatic', 'manual'))
         pred_data['condition'] = st.selectbox(
         'Condition',
         ('good', 'excellent', 'like new', 'fair', 'salvage', 'new'))
 
-        pred_data['model'] = st.selectbox(
-        'Condition',
-        SEGMENT_MODELS[segment])
+        
 
     with col2:
 
-        pred_data['transmission'] = st.selectbox(
-        'Transmission',
-        ('automatic', 'manual'))
+        pred_data['model'] = st.selectbox(
+                'Model',
+                SEGMENT_MODELS[segment])
 
         pred_data['drive'] = st.selectbox(
         'Drive',
