@@ -6,3 +6,4 @@ numpy
 streamlit-toggle-switch
 altair
 matplotlib
+seaborn
