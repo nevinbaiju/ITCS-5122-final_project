@@ -40,12 +40,14 @@ def analyze_resale_value(segment):
     with section_left:
         if model_analysis:
             st.write(plot_choropleth(df, 'price', model))
+            st.write(plot_scatter_with_age(df, model, 'price'))
         else:
             fig = plot_price_with_age(df)
             st.write(fig)
     with section_right:
         if model_analysis:
-            st.image(f'img/{model}.png')
+            st.image(f'img/{model}.png', width=570)
+            st.write(plot_scatter_with_age(df, model, 'odometer'))
         else:
             fig = plot_mileage_with_age(df)
             st.write(fig)

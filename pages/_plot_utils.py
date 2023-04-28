@@ -81,8 +81,8 @@ def plot_choropleth(df, var, model):
         fill='lightgray',
         stroke='white'
     ).project('albersUsa').properties(
-        width=500,
-        height=300
+        width=600,
+        height=400
     )
 
     ch_map = alt.Chart(states).mark_geoshape().encode(
@@ -95,6 +95,23 @@ def plot_choropleth(df, var, model):
                 type='albersUsa'
             ).properties(
                 width=600,
-                height=400
+                height=400,
+                title=f'Price of {model} for each states'
             )
     return background+ch_map
+
+def plot_scatter_with_age(df, model, var):
+    model_df = df[df['model'] == model]
+    model_df = model_df[(model_df['price'] < 35000) & (model_df['age'] < 30) & (model_df['odometer'] < 300000)]
+    model_df.dropna(subset=['condition'], inplace=True)
+
+    scatter = alt.Chart(model_df).mark_point().encode(
+        x='age',
+        y=var,
+        color='condition'
+    ).properties(
+        title=f'{var.capitalize()} vs Age marked by the condition',
+        height=600, width=750,
+    )
+    
+    return scatter
