@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import altair as alt
+from vega_datasets import data
 import pandas as pd
 
 ticks_settings = {'fontsize':15}
@@ -42,7 +43,7 @@ def plot_price_with_age(df):
         color=alt.Color('model:N', title='Model')
     ).properties(
         title='Price by Age and Model',
-        width=800,
+        width=550,
         height=400,
     )
     
@@ -58,8 +59,42 @@ def plot_mileage_with_age(df):
         color=alt.Color('model:N', title='Model')
     ).properties(
         title='Mileage by Age and Model',
-        width=800,
+        width=550,
         height=400,
     )
     
     return chart
+
+def plot_choropleth(df, var, model):
+    df = df.copy()
+    df = df[df['model'] == model]
+    grouped_df = df.groupby(['state']).agg({'price': 'mean', 'year': 'count'}).reset_index()
+    state_names = grouped_df.state.unique()
+    state_ids = [x+1 for x in range(len(state_names))]
+    state_mappings = pd.DataFrame({'state': state_names, 'id': state_ids})
+
+    grouped_df = grouped_df.merge(state_mappings, on='state', how='left')
+
+    states = alt.topo_feature(data.us_10m.url, 'states')
+
+    background = alt.Chart(states).mark_geoshape(
+        fill='lightgray',
+        stroke='white'
+    ).project('albersUsa').properties(
+        width=500,
+        height=300
+    )
+
+    ch_map = alt.Chart(states).mark_geoshape().encode(
+                color='price:Q',
+                tooltip=['id:O', 'price:Q']
+            ).transform_lookup(
+                lookup='id',
+                from_=alt.LookupData(grouped_df, 'id', ['price'])
+            ).project(
+                type='albersUsa'
+            ).properties(
+                width=600,
+                height=400
+            )
+    return background+ch_map

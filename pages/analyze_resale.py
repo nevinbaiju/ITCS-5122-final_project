@@ -39,7 +39,7 @@ def analyze_resale_value(segment):
 
     with section_left:
         if model_analysis:
-            pass
+            st.write(plot_choropleth(df, 'price', model))
         else:
             fig = plot_price_with_age(df)
             st.write(fig)
